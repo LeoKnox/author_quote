@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <style>
+        .quote_list {
+            vertical-align: top;
+            display:inline-block;
+            margin-left: 30px;
+        }
+        .create_quote {
+            vertical-align: top;
+            display:inline-block;
+            padding-left: 60px;
+        }
+        .quote {
+            width: 400px;
+            border: 2px solid black;
+        }
+        h3 {
+            display:inline-block;
+            margin-left: 20px;
+        }
+        .edit {
+            padding-left:400px;
+            vertical-align: center;
+        }
+        .qhead {
+            vertical-align: top;
+        }
+        .quote_field {
+            width: 350px;
+            height: 150px;
+        }
+        </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+    <body>
+        <div class="top">
+            <h3>Welcome {{ request.session.use }}</h3>
+            <a href="/edit" class="edit">Edit My Account</a>
+            <a class="btn btn-dark" href="/logout">Logout</a>
+        </div>
+        <div class="quote_list">
+            <p class=title>Quotes</p>
+            {% for item in data %}
+            <div class="quote">
+                <p>{{ item.author }}: "{{ item.quote }}"</p>
+                <p>Posted by <a href="/poster/{{item.poster.id}}">{{ item.poster.first_name }} {{ item.poster.last_name }}</a></p><br>
+                {% if item.poster.first_name == request.session.use %}
+                    <a href="/delete/{{ item.poster.id }}">Delete</a>
+                {% endif %}
+            </div><br>
+            {% endfor %}
+        </div>
+        <div class="create_quote">
+            <h3>Add a Quote!</h3>
+            <form action="create_quote" method="POST">
+                {% csrf_token %}
+                <p>Author<input type="text" name="author"></p>
+                <p class="qhead">Quote<input type="text" name="quote" class="quote_field"></p>
+                <input type="submit" value="Submit">
+            </form>
+            {% if messages %}
+                <ul class="messages">
+                    {% for error in messages %}
+                        <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </body>
+</html>

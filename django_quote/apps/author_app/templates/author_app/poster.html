@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <style>
+        .quotes {
+            border: 1px solid black;
+            width: 350px;
+        }
+        body {
+            padding: 30px;
+        }
+        h3 {
+            display: inline-block;
+        }
+        .back {
+            padding-left: 140px;
+        }
+        </style>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <body>
+        <div>
+            <h3> {{user.first_name}} {{user.last_name}}'s quotes</h3>
+            <a class="back" href="/welcome">Back</a>
+            <a class="btn btn-dark" href="/logout">Logout</a>
+        </div>
+        {% for x in makes %}
+            <div class="quotes">
+                <p>{{ x.quote }}</p>
+            </div><br>
+        {% endfor %}
+    </body>
+</html>
